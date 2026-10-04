@@ -1,0 +1,32 @@
+<!--
+<form> de entrada de datos (al menos 5; 1 numérico y 1 fecha)
+Botón "borrar todo"
+Al hacer 'submit' en el formulario, se crea un nuevo <div> que contiene los datos. Ese div también tendrá un id único
+En el <div> hay botones "borrar" y "actualizar"
+  (1) Si pulsas "borrar", se elimina ese <div>
+  (2) Si pulsas "actualizar", podrás usar el <form> para actualizar los datos de ese elemento. … (¿Cómo?)
+Usa ChatGPT para darle estilo visual después, si quieres.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="main-formulario">
+        <input type="text" name="Nombre" placeholder="Arturo Vals">
+        <input type="text" name="Clase" placeholder="Guerrero">
+        <input type="number" name="Nivel" placeholder="1">
+        <input type="date" name="Nacimiento" placeholder="01-01-1995">
+        <input type="text" name="Trasfondo" placeholder="Escribe aquí su historia">
+
+        <input type="button" name="borrar" id="borrar" value="Borrar todo">
+        <input type="submit" name="fin" value="FINALIZAR">
+    </form>
+
+    <script src="form.js"></script>
+</body>
+</html>
