@@ -46,8 +46,22 @@ form.addEventListener("submit", (subida) => {
    divDatos.appendChild(botonBorrar);
    divDatos.appendChild(botonActualizar);
 
-
    document.body.appendChild(divDatos)
 
+   //a ver si me da tiempo a hacer que borre cosas xD
+   botonBorrar.addEventListener("click", () => {
+        divDatos.remove();
+   })
+   // update: me dio tiempo
+
+   botonActualizar.addEventListener("click", () => {
+    
+        nombrePersonaje.innerText = "Nombre: " + form.elements.Nombre.value;
+        clasePersonaje.innerText = "Clase: " + form.elements.Clase.value;
+        nivelPersonaje.innerText = "Nivel: " + form.elements.Nivel.value;
+        fechaNacimientoPersonaje.innerText = "Fecha Nacimiento: " + form.elements.Nacimiento.value;
+        trasfondoPersonaje.innerText = "Trasfondo: " + form.elements.Trasfondo.value;
+
+   })
 
 })
