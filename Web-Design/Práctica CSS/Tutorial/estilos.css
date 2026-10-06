@@ -1,0 +1,20 @@
+/**
+    selector {
+        propiedad:valor;
+        propiedad:valor;
+    }
+
+    selector etiqueta o tipo (nombre de la etiqueta)
+    selector de clases (.clase)
+    selector de id (#id)
+    selector descendiente directo (etiqueta > etiqueta)
+    selector descendiente (etiqueta [espacio] etiqueta)
+    selector universal (usamos el selector "*" para que afecte a todo. Se suele usar al inicio del documento)
+        *{
+            aplica a todo, se suele usar para eliminar margenes por defecto
+        }
+*/
+
+p {
+    font-size: 72px;
+}
