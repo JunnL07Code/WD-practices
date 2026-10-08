@@ -13,7 +13,16 @@
         *{
             aplica a todo, se suele usar para eliminar margenes por defecto
         }
-*/
+
+
+    HERENCIA ----------------------------------
+    Hay propiedades heredables y no heredables
+    Heredables: (texto, fuente:color, font-size, font-weight, font-style, font-family
+    No heredables: background-color, border, margin, padding, width, height, 
+
+
+
+    */
 
 p {
     font-size: 72px;
