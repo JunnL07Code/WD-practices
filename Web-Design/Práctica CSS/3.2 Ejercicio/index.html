@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de cajas</title>
+    <style>
+        /*estilos css*/
+
+        /*reset básico*/
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /*(con esto el padding y el contenido se aunan)*/
+        }
+        
+        .container {
+            padding: 10px;
+            border: 4px solid black;
+            margin-top: 30px;
+            margin-left: -30px;
+            width: 300;
+            height: 200;
+        }
+
+    </style>
+</head>
+<body>
+        <!--
+        MODELO DE CAJAS
+            Content (texto, imágenes) -> width, height
+
+            Padding (el relleno transparente interior de la caja del objeto)
+                padding-top
+                padding-bottom
+                padding-left
+                padding-right
+                padding
+                    padding: 10 px; (se aplica a los 4)
+                    padding 10px 20px;(10px superior e inferior, 20 pixeles derecho e izqierdo
+                    (va en el sentido de las agujas del reloj)
+            
+                (el padding no puede ser negativo, ya que hace el relleno interior)
+
+            Border (la línea que rodea la caja)
+                border-color
+                border-style
+                border-width
+
+            Margin (relleno transparente exterior de la caja) 
+                margin (para margen general, va en sentido horario)
+                margin-left, margin-right, margin-top, margin-bottom
+
+            Ancho real de un elemento = contenido + padding + border
+            Alto real de un elemento = contenido + padding + border
+    
+    
+        -->
+
+        <div class="container">
+            Esto es una caja
+        </div>
+</body>
+</html>
