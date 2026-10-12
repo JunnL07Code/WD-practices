@@ -1,5 +1,10 @@
 const form = document.getElementById("viaje-form");
+const limpiar = document.getElementById("boton-limpiar");
 let idNumber = 0;
+
+limpiar.addEventListener("click", () => {
+    form.reset();
+})
 
 form.addEventListener("submit", (intro => {
     intro.preventDefault();
@@ -19,7 +24,5 @@ form.addEventListener("submit", (intro => {
     listaDatos.appendChild(destino);
     listaDatos.appendChild(fecha);
     document.body.appendChild(divViaje);
-
-
 
 }))
