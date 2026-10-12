@@ -21,6 +21,8 @@ form.addEventListener("submit", (intro => {
 
     const botonBorrar = document.createElement("button");
     botonBorrar.innerText = "Borrar";
+    const botonEditar = document.createElement("button");
+    botonEditar.innerText = "Editar";
 
     destino.innerText = "Destino: " + intro.target.elements.destino.value;
     fecha.innerText = "Fecha: " + intro.target.elements.fecha.value;
@@ -31,9 +33,15 @@ form.addEventListener("submit", (intro => {
     document.body.appendChild(divViaje);
 
     divViaje.appendChild(botonBorrar);
+    divViaje.appendChild(botonEditar);
 
     botonBorrar.addEventListener("click", () => {
         divViaje.remove();
+    })
+
+    botonEditar.addEventListener("click", () => {
+        destino.innerText = "Destino: " + form.elements.destino.value;
+        fecha.innerText = "Fecha: " + form.elements.fecha.value;
     })
 
 }))
