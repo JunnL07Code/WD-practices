@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegaso</title>
+</head>
+<body>
+
+    <img src="pngwing.com.png" id="personaje" height="100px">
+
+    <canvas id="lienzo" width="600" height="600">
+
+</body>
+
+    <script>
+        let pulsandoArriba = false;
+        let pulsandoAbajo = false;
+        let pulsandoIzqda = false;
+        let pulsandoDcha = false;
+
+        window.addEventListener("keydown", (ev) => {
+            if(ev.key === "w"){
+                pulsandoArriba = true;
+            }
+
+            if(ev.key === "a"){
+                pulsandoIzqda = true;
+            }
+
+            if(ev.key === "s"){
+                pulsandoAbajo = true;
+            }
+
+            if(ev.key === "d"){
+                pulsandoDcha = true;
+            }
+
+        })
+
+        window.addEventListener("keyup", (ev) => {
+
+            if(ev.key === "w"){
+                pulsandoArriba = false;
+            }
+
+            if(ev.key === "a"){
+                pulsandoIzqda = false;
+            }
+
+            if(ev.key === "s"){
+                pulsandoAbajo = false;
+            }
+
+            if(ev.key === "d"){
+                pulsandoDcha = false;
+            }
+            
+        })
+
+        const miCanvas = document.getElementById("lienzo");
+        const contextoPintar = miCanvas.getContext("2d");
+        const imagen = document.getElementById("personaje");
+
+        let posicionX = 0;
+        let posicionY = 0;
+
+        function pintarNuevoFrame(delta) {
+
+            if (pulsandoDcha) { posicionX += 2 }
+            if (pulsandoIzqda) { posicionX -= 2 }
+            if (pulsandoArriba) { posicionY -= 2 }
+            if (pulsandoAbajo) { posicionY += 2 }
+
+            contextoPintar.clearRect(0, 0, 600, 600)
+            contextoPintar.drawImage(imagen, posicionX, posicionY, (636/2), (507/2))
+
+            requestAnimationFrame(pintarNuevoFrame);
+            // es como decir "setTimeout", cuando vayas a ejecutar el renderizado
+        }
+
+            requestAnimationFrame(pintarNuevoFrame);
+    </script>
+</html>

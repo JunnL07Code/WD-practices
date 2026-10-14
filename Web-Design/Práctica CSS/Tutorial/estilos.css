@@ -21,8 +21,43 @@
     No heredables: background-color, border, margin, padding, width, height, 
 
 
+    ENLACES --------------------------------------
+    Podemos aplicar estilos a los tags de enlace para cambiar su comportamiento según la situación.
+    a:link -- no visitado
+    a:hover -- hovering
+    a:visited -- cuando ya se ha usado
+    a:active -- cuando se está pulsando
+
+    HERENCIA ----------------------------------------
+     :only-child
+     :first-child
+     :last-child
+     :nth-child()
 
     */
+
+
+    tr:first-child {
+        color: red;
+    }
+
+    tr:nth-child(2) {
+        color: blue;
+    }
+
+    tr:nth-child(3) {
+        color: green;
+    }
+
+    tr:nth-child(4) {
+        color: orange;
+    }
+
+    tr:last-child {
+        color: purple;
+    }
+
+
 
 p {
     font-size: 72px;
