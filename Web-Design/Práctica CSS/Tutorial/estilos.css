@@ -62,3 +62,13 @@
 p {
     font-size: 72px;
 }
+
+
+/*
+    OVERFLOW: qué pasa con el contenido que no cabe en el contenedor
+        visible: por defecto
+        hidden: oculta
+        scroll: se generan barras de desplazamiento
+        auto: se generan barras de desplazamiento
+
+*/
