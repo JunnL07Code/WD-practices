@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Flex</title>
+
+    <!-- IMPORTANTÍSIMO EN EL DISEÑO RESPONSIVE -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Para que el ancho del elemento no incluya el margen*/
+        }
+        .flex-container {
+            background-color: aquamarine;
+            height: 500px;
+            display: flex;
+
+            /*También está inline-flex, que ocupa en línea, en vez de el bloque*/
+            flex-direction: row;
+            /*flex-direction:
+                valores: row (por defecto), column, row-reverse, column-reverse;
+            */
+            justify-content: space-evenly;
+            /*
+                justify-content: alinea la línea flexible en el eje principal
+                valores: center, flex-start, flex-end, space-around, space-evenly...................................
+            */
+            align-items: center;
+            /*
+                align-items alinea verticalmente
+                valores: center, flex-start (arriba), flex-end (abajo), stretch (estira de arriba a abajo), 
+                
+            */
+            gap: 100px;
+            /* gap es una propiedad abreviada, se descompone en row-gap y column-gap, lo que crea espacios entre los elementos flexibles
+                cuidado con él. Si haces un gap muy grande se salen los elementos del flexbox y se jode*/
+
+            flex-wrap: wrap;
+            /*flex-wrap permite que los elementos flexibles no caben permite bajarlos de linea*/
+
+
+        }
+        .flex-item {
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-container">
+        <div class="flex-item">Elemento1</div>
+        <div class="flex-item">Elemento2</div>
+        <div class="flex-item">Elemento3</div>
+        <div class="flex-item">Elemento4</div>
+    </div>
+</body>
+</html>
