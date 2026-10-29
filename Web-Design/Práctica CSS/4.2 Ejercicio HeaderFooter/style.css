@@ -3,3 +3,27 @@
     margin: 0px;
     box-sizing: border-box;
 }
+
+header, footer{
+    background-color: black;
+    color: white;
+}
+
+nav {
+    font-family: ubuntu;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url(fonts\Montserrat-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url(fonts\Montserrat-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Crimson Text';
+    src: url(fonts\CrimsonText-Regular.ttf);
+}
