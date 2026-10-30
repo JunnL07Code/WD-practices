@@ -4,26 +4,44 @@
     box-sizing: border-box;
 }
 
-header, footer{
+header, footer {
     background-color: black;
     color: white;
+    font-family: Ubuntu;
+    font-style: bold;
+    font-weight: 500;
+    font-size: 24px;
 }
 
-nav {
-    font-family: ubuntu;
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#header-nav{
+    color: white;
+
+}
+
+
+
+footer {
+
+}
+
+
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url(fonts/Montserrat-Bold.ttf);
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: url(fonts\Montserrat-Bold.ttf);
+    font-family: Ubuntu-Bold, sans-serif;
+    src: url(fonts/Ubuntu-Bold.ttf);
 }
 
 @font-face {
-    font-family: 'Ubuntu';
-    src: url(fonts\Montserrat-Bold.ttf);
-}
-
-@font-face {
-    font-family: 'Crimson Text';
-    src: url(fonts\CrimsonText-Regular.ttf);
+    font-family: CrimsonText;
+    src: url(fonts/CrimsonText-Regular.ttf);
 }
