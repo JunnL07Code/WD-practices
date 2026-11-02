@@ -1,8 +1,13 @@
+/*BASIC RESET*/
+
 *{
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
 }
+
+
+/*STYLING*/
 
 header, footer {
     background-color: black;
@@ -17,7 +22,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 #header-buttons {
@@ -39,7 +43,10 @@ header {
 #header-nav a{
     color: white;
     text-decoration: none;
+}
 
+#header-nav a:hover{
+    color: orange;
 }
 
 
@@ -47,7 +54,21 @@ header {
 
 
 footer {
+    padding: 50px 90PX 25px;
+}
+
+#footer-upper-section {
     display: flex;
+    justify-content: space-between;
+}
+
+#footer-nav {
+    display: flex;
+    gap: 75px;
+}
+
+#footer-nav ul{
+    list-style-type: none;
 }
 
 #footer-nav a{
@@ -55,13 +76,30 @@ footer {
     text-decoration: none;
 }
 
+#footer-nav a:hover{
+    color: orange
+}
+
 #footer-down-section {
+    padding: 100px 0 0;
     font-family: CrimsonText;
     font-size: 20px;
     font-weight: 100;
+    text-align: center;
+}
+
+#socials-buttons a{
+    color: white;
+}
+
+#socials-buttons a:hover{
+    color: orange;
 }
 
 
+
+
+/*FONT IMPORTS*/
 @font-face {
     font-family: Montserrat-Bold;
     src: url(fonts/Montserrat-Bold.ttf);
