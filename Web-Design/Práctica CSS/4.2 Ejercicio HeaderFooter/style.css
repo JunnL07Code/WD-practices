@@ -7,27 +7,41 @@
 header, footer {
     background-color: black;
     color: white;
-    font-family: Ubuntu;
-    font-style: bold;
-    font-weight: 500;
+    font-family: Ubuntu-Bold, sans-serif;
+    font-weight: 700;
     font-size: 24px;
 }
 
 header {
+    padding: 15px 50px 15px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 }
 
-#header-nav{
+#header-buttons {
+    display: flex;
+    flex-flow: row;
+}
+
+#header-nav a{
     color: white;
+    text-decoration: none;
 
 }
+
+
 
 
 
 footer {
+    display: flex;
+}
 
+#footer-nav a{
+    color: white;
+    text-decoration: none;
 }
 
 
