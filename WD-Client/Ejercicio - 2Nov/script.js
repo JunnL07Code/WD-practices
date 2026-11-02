@@ -16,8 +16,8 @@ fetch("https://swapi.dev/api/people").then( (answer) => {
                              "<td>" + character.birth_year + "</td>"
 
 
-        row.addEventListener("click", () =>{
-            alert ("clickaste en " + character.name)
+            row.addEventListener("click", () =>{
+                alert ("clickaste en " + character.name)
             }
         )}
     })
