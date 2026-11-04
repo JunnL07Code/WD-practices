@@ -1,0 +1,38 @@
+*{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            background-color: beige;
+            display: grid;
+            /*grid-template-columns: 100px 100px 100px
+                valores posibles:
+                    medida fija px
+                    medida relativa %
+                    fracción: fr, se reparte el espacio si hay
+                    auto: ocupa el espacio disponible y lo reparte
+                    minmax(min,max): 
+                    repeat()
+            */
+            grid-template-columns: repeat(2, calc(50% - 10px)); /*1fr 1fr*/
+            height: 500px;
+            /*grid-template-rows: 100px 100px*/
+            grid-template-rows: repeat(2,1fr);
+
+            /*gap: row-gap column-gap*/
+            gap: 20px;
+
+            /*justify-content: alinea si hay espacio en el eje x la cuadrícula
+                start
+                end
+                center
+                space-between
+                space-evenly
+                space-around
+            */
+            justify-content: end;
+        }
+        .item{
+            background-color: yellowgreen;
+        }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gligar</title>
+</head>
+<body>
+    
+
+    <script>
+        const params = new URLSearchParams(window.location.search)
+
+        const URL = "https://pokeapi.co/api/v2/pokemon/" + params.get("p")
+
+
+        fetch(URL).then( (respuesta) => {
+            respuesta.json().then( (responseBody) => {
+                console.log(responseBody)
+
+                document.createElement("p")
+                document.querySelector("p").innerHTML +=
+                    "<li>" + responseBody.name + "</li>"
+                document.createElement("img")
+                document.querySelector("img").src = responseBody.sprites.front_default;
+                
+            })
+        }) 
+
+    </script>
+</body>
+</html>
