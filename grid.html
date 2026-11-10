@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950 text-slate-100 font-sans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Visual Cheat Sheet & Playground</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'Fira Code', monospace; }
+        
+        /* Grid overlay visual helper */
+        .grid-line-overlay {
+            background-size: 100% 100%;
+            pointer-events: none;
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Dynamic grid items custom styles */
+        .grid-demo-container {
+            transition: all 0.25s ease-in-out;
+        }
+
+        .demo-box {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Grid lines visual mode overlay styling */
+        .show-grid-lines {
+            background-image: linear-gradient(to right, rgba(56, 189, 248, 0.15) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col md:flex-row overflow-hidden bg-slate-950 text-slate-100">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-150%] opacity-0 transition-all duration-300 bg-emerald-600 text-white px-4 py-3 rounded-lg shadow-xl flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-xl"></i>
+        <span id="toast-message">¡Código copiado al portapapeles!</span>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-80 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <!-- Logo & Title -->
+        <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-border-all"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-100 text-lg leading-tight">CSS Grid</h1>
+                    <p class="text-xs text-cyan-400 font-medium">Guía Interactiva & Cheat Sheet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Tabs -->
+        <div class="flex border-b border-slate-800 bg-slate-950/50 p-1">
+            <button id="tab-container" onclick="switchMainTab('container')" class="flex-1 py-2 px-3 text-sm font-semibold rounded-md transition-all text-cyan-400 bg-slate-800 shadow-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-box"></i> Contenedor
+            </button>
+            <button id="tab-items" onclick="switchMainTab('items')" class="flex-1 py-2 px-3 text-sm font-medium text-slate-400 hover:text-slate-200 rounded-md transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-cubes"></i> Ítems
+            </button>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 overflow-y-auto p-4 space-y-6" id="sidebar-nav">
+            <!-- Nav Container Items -->
+            <div id="nav-container-group" class="space-y-1">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">Estructura & Plantilla</div>
+                <button onclick="loadPreset('display')" class="nav-btn active w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>display</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('grid-template')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>grid-template-columns/rows</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('grid-template-areas')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>grid-template-areas</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('gap')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>gap / column-gap / row-gap</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mt-6 mb-2">Alineación de Ítems (Celda)</div>
+                <button onclick="loadPreset('justify-items')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>justify-items</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('align-items')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>align-items</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('place-items')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>place-items</code> (shorthand)</span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mt-6 mb-2">Alineación de Grid (Malla)</div>
+                <button onclick="loadPreset('justify-content')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>justify-content</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('align-content')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>align-content</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('place-content')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>place-content</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mt-6 mb-2">Grids Implícitos & Flujo</div>
+                <button onclick="loadPreset('grid-auto')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>grid-auto-flow / rows / cols</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+            </div>
+
+            <!-- Nav Items Group -->
+            <div id="nav-items-group" class="space-y-1 hidden">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">Posicionamiento Individual</div>
+                <button onclick="loadPreset('grid-column-row')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>grid-column</code> & <code>grid-row</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('grid-area-item')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>grid-area</code> (Ítem)</span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mt-6 mb-2">Alineación Individual</div>
+                <button onclick="loadPreset('justify-self')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>justify-self</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('align-self')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>align-self</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+                <button onclick="loadPreset('place-self')" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm flex items-center justify-between text-slate-300 hover:bg-slate-800/60 hover:text-cyan-400 transition">
+                    <span><code>place-self</code></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-40"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="p-4 border-t border-slate-800 bg-slate-900/50 text-xs text-slate-400 text-center">
+            Selecciona una propiedad para explorar sus valores y ver los cambios visuales en vivo.
+        </div>
+    </aside>
+
+    <!-- Main Playground Area -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-slate-950">
+        <!-- Top Controls & Information Header -->
+        <header class="p-6 border-b border-slate-800 bg-slate-900/40">
+            <div class="max-w-6xl mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span id="current-badge" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-950 text-cyan-400 border border-cyan-800/50">Grid Container</span>
+                        <h2 id="current-title" class="text-xl font-bold text-slate-100"><code>grid-template-columns</code> / <code>rows</code></h2>
+                    </div>
+                    <p id="current-description" class="text-sm text-slate-400">Define el nombre y el tamaño de las columnas y filas del contenedor grid utilizando valores fijos, porcentajes, fracciones (fr) o funciones como repeat() y minmax().</p>
+                </div>
+
+                <!-- Helper toggles -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <label class="inline-flex items-center cursor-pointer text-xs font-medium text-slate-300 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-700 transition">
+                        <input type="checkbox" id="toggle-lines" class="sr-only peer" checked onchange="toggleGridLines()">
+                        <div class="relative w-8 h-4 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-cyan-600"></div>
+                        <span class="ms-2">Líneas de Guía</span>
+                    </label>
+
+                    <button onclick="resetCurrentPreset()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i> Restablecer
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Controls & Visualization Grid -->
+        <div class="flex-1 p-6 max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Controls Panel (Left side on big screens) -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <!-- Interactive Form Controls -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg">
+                    <h3 class="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-cyan-400"></i> Controles Dinámicos
+                    </h3>
+                    <div id="controls-container" class="space-y-4">
+                        <!-- Dynamic controls generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Item Specific Focus Selector (Only active for Item properties or when item tab is selected) -->
+                <div id="item-selector-card" class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg hidden">
+                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-hand-pointer text-cyan-400"></i> Seleccionar Ítem Activo
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-3">Elige cuál elemento del grid modificarás con los controles:</p>
+                    <div class="grid grid-cols-5 gap-2" id="item-buttons-group">
+                        <!-- Generated via JS -->
+                    </div>
+                </div>
+
+                <!-- Live CSS Code Output -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-code text-cyan-400"></i> CSS Generado
+                        </h3>
+                        <button onclick="copyCSSCode()" class="text-xs bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 p-4 rounded-lg border border-slate-800/80 text-xs text-cyan-300 overflow-x-auto leading-relaxed"><code id="css-code-display">.container {
+  display: grid;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Preview Viewport (Right side on big screens) -->
+            <div class="lg:col-span-8 flex flex-col">
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg flex-1 flex flex-col min-h-[420px] relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Visualización del Renderizado
+                        </div>
+                        <span id="dimension-indicator" class="text-xs font-mono text-slate-500">Contenedor: 100% × 380px</span>
+                    </div>
+
+                    <!-- Canvas/Grid View Area -->
+                    <div class="flex-1 bg-slate-950 rounded-xl border border-slate-800 p-4 relative overflow-auto flex flex-col justify-start min-h-[360px]">
+                        
+                        <!-- Grid Visual Container -->
+                        <div id="grid-demo" class="w-full min-h-[320px] h-full rounded-lg bg-slate-900/60 p-3 border border-slate-700/50 relative show-grid-lines">
+                            <!-- Items inserted dynamically -->
+                        </div>
+
+                    </div>
+
+                    <!-- Footnote / Legend -->
+                    <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 pt-3 border-t border-slate-800/60">
+                        <div class="flex items-center gap-4">
+                            <span class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded bg-indigo-600/60 border border-indigo-400 inline-block"></span> Ítem Normal
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded bg-amber-500/80 border border-amber-300 inline-block"></span> Ítem Seleccionado
+                            </span>
+                        </div>
+                        <span class="italic text-slate-500">Haz clic en cualquier caja para seleccionarla directamente.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // State Management
+        let currentTab = 'container'; // 'container' | 'items'
+        let currentPresetKey = 'grid-template';
+        let activeItemIndex = 1; // 1-indexed for CSS items
+        let showLines = true;
+
+        // Current Config Values
+        let currentConfig = {};
+
+        // Definitions of properties and demo scenarios
+        const presets = {
+            // CONTAINER PROPERTIES
+            'display': {
+                title: 'display',
+                category: 'Grid Container',
+                description: 'Define la caja contenedora como un contenedor Grid. `grid` genera un bloque mientras `inline-grid` se comporta en línea.',
+                itemsCount: 4,
+                controls: [
+                    {
+                        name: 'display',
+                        type: 'select',
+                        options: ['grid', 'inline-grid'],
+                        default: 'grid'
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'grid-template': {
+                title: 'grid-template-columns & grid-template-rows',
+                category: 'Grid Container',
+                description: 'Establecen las columnas y filas con tamaños explícitos (px, %, fr, auto, minmax, repeat).',
+                itemsCount: 6,
+                controls: [
+                    {
+                        name: 'grid-template-columns',
+                        type: 'select',
+                        options: [
+                            '1fr 1fr 1fr',
+                            '200px 1fr 100px',
+                            'repeat(3, 1fr)',
+                            'repeat(auto-fit, minmax(120px, 1fr))',
+                            '1fr 2fr 1fr',
+                            '30% 70%'
+                        ],
+                        default: '1fr 1fr 1fr'
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'select',
+                        options: [
+                            '80px 80px',
+                            '1fr 2fr',
+                            'repeat(2, 100px)',
+                            'auto 1fr'
+                        ],
+                        default: '80px 80px'
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'grid-template-areas': {
+                title: 'grid-template-areas',
+                category: 'Grid Container',
+                description: 'Define la plantilla del layout asignando nombres a áreas específicas del grid.',
+                itemsCount: 4,
+                useAreasLayout: true,
+                controls: [
+                    {
+                        name: 'grid-template-areas',
+                        type: 'select',
+                        options: [
+                            '"header header"\n"sidebar main"\n"footer footer"',
+                            '"header sidebar"\n"main sidebar"\n"footer footer"',
+                            '"header header"\n"main main"\n"footer footer"'
+                        ],
+                        default: '"header header"\n"sidebar main"\n"footer footer"'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'select',
+                        options: ['1fr 3fr', '200px 1fr', '1fr 1fr'],
+                        default: '1fr 3fr'
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'select',
+                        options: ['60px 1fr 50px', '80px 180px 60px'],
+                        default: '60px 1fr 50px'
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'gap': {
+                title: 'gap / column-gap / row-gap',
+                category: 'Grid Container',
+                description: 'Establece la separación o espacio entre los elementos del grid (filas y columnas).',
+                itemsCount: 6,
+                controls: [
+                    {
+                        name: 'gap',
+                        type: 'select',
+                        options: ['10px', '24px', '40px', '10px 30px', '0px'],
+                        default: '20px'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'justify-items': {
+                title: 'justify-items',
+                category: 'Grid Container',
+                description: 'Alinea todos los ítems horizontalmente dentro de su propia celda (eje en línea).',
+                itemsCount: 6,
+                controls: [
+                    {
+                        name: 'justify-items',
+                        type: 'select',
+                        options: ['stretch', 'start', 'end', 'center'],
+                        default: 'stretch'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 90px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'align-items': {
+                title: 'align-items',
+                category: 'Grid Container',
+                description: 'Alinea todos los ítems verticalmente dentro de su propia celda (eje de bloque).',
+                itemsCount: 6,
+                controls: [
+                    {
+                        name: 'align-items',
+                        type: 'select',
+                        options: ['stretch', 'start', 'end', 'center'],
+                        default: 'stretch'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 90px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'place-items': {
+                title: 'place-items',
+                category: 'Grid Container',
+                description: 'Shorthand (atajo) que combina `align-items` y `justify-items` simultáneamente (ej: `align justify`).',
+                itemsCount: 6,
+                controls: [
+                    {
+                        name: 'place-items',
+                        type: 'select',
+                        options: ['center center', 'start end', 'end center', 'stretch stretch', 'center stretch'],
+                        default: 'center center'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 90px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'justify-content': {
+                title: 'justify-content',
+                category: 'Grid Container',
+                description: 'Alinea la malla completa del grid horizontalmente cuando el tamaño del contenedor es mayor que las columnas.',
+                itemsCount: 4,
+                fixedGridWidth: true,
+                controls: [
+                    {
+                        name: 'justify-content',
+                        type: 'select',
+                        options: ['start', 'end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly'],
+                        default: 'center'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(2, 100px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'align-content': {
+                title: 'align-content',
+                category: 'Grid Container',
+                description: 'Alinea la malla completa del grid verticalmente cuando el tamaño del contenedor es mayor que las filas.',
+                itemsCount: 4,
+                fixedGridHeight: true,
+                controls: [
+                    {
+                        name: 'align-content',
+                        type: 'select',
+                        options: ['start', 'end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly'],
+                        default: 'center'
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 70px)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(2, 1fr)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'place-content': {
+                title: 'place-content',
+                category: 'Grid Container',
+                description: 'Shorthand para definir `align-content` y `justify-content` en una sola declaración.',
+                itemsCount: 4,
+                fixedGridHeight: true,
+                controls: [
+                    {
+                        name: 'place-content',
+                        type: 'select',
+                        options: ['center center', 'space-between space-around', 'start end', 'center space-between'],
+                        default: 'center center'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(2, 120px)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 70px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+            'grid-auto': {
+                title: 'grid-auto-flow / rows / columns',
+                category: 'Grid Container',
+                description: 'Controla la generación automática de filas/columnas implícitas cuando hay más ítems que celdas explícitas.',
+                itemsCount: 7,
+                controls: [
+                    {
+                        name: 'grid-auto-flow',
+                        type: 'select',
+                        options: ['row', 'column', 'row dense', 'column dense'],
+                        default: 'row'
+                    },
+                    {
+                        name: 'grid-auto-rows',
+                        type: 'select',
+                        options: ['60px', '100px', 'minmax(50px, auto)'],
+                        default: '70px'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(2, 1fr)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'container'
+            },
+
+            // ITEM PROPERTIES
+            'grid-column-row': {
+                title: 'grid-column & grid-row (Spanning / Líneas)',
+                category: 'Grid Item',
+                description: 'Posiciona un ítem específico usando líneas numéricas de inicio/fin o haciendo span a través de celdas.',
+                itemsCount: 6,
+                itemFocus: true,
+                controls: [
+                    {
+                        name: 'grid-column',
+                        type: 'select',
+                        options: ['1 / 3', '2 / 4', '1 / span 2', '1 / -1', 'auto'],
+                        default: '1 / 3'
+                    },
+                    {
+                        name: 'grid-row',
+                        type: 'select',
+                        options: ['1 / 2', '1 / 3', '2 / span 2', 'auto'],
+                        default: '1 / 3'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(3, 80px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'item'
+            },
+            'grid-area-item': {
+                title: 'grid-area (en Ítem)',
+                category: 'Grid Item',
+                description: 'Asigna el ítem a un área nombrada o sirve como shorthand de: row-start / col-start / row-end / col-end.',
+                itemsCount: 5,
+                itemFocus: true,
+                controls: [
+                    {
+                        name: 'grid-area',
+                        type: 'select',
+                        options: ['1 / 1 / 3 / 3', '2 / 2 / 4 / 4', '1 / 2 / 3 / 4'],
+                        default: '1 / 1 / 3 / 3'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(3, 75px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'item'
+            },
+            'justify-self': {
+                title: 'justify-self',
+                category: 'Grid Item',
+                description: 'Alinea un solo ítem de forma individual a lo largo del eje horizontal dentro de su celda.',
+                itemsCount: 6,
+                itemFocus: true,
+                controls: [
+                    {
+                        name: 'justify-self',
+                        type: 'select',
+                        options: ['start', 'end', 'center', 'stretch'],
+                        default: 'center'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 90px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'item'
+            },
+            'align-self': {
+                title: 'align-self',
+                category: 'Grid Item',
+                description: 'Alinea un solo ítem de forma individual a lo largo del eje vertical dentro de su celda.',
+                itemsCount: 6,
+                itemFocus: true,
+                controls: [
+                    {
+                        name: 'align-self',
+                        type: 'select',
+                        options: ['start', 'end', 'center', 'stretch'],
+                        default: 'center'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 90px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'item'
+            },
+            'place-self': {
+                title: 'place-self',
+                category: 'Grid Item',
+                description: 'Shorthand individual para `align-self` y `justify-self` sobre un ítem específico.',
+                itemsCount: 6,
+                itemFocus: true,
+                controls: [
+                    {
+                        name: 'place-self',
+                        type: 'select',
+                        options: ['center center', 'start end', 'end start', 'stretch stretch'],
+                        default: 'center center'
+                    },
+                    {
+                        name: 'grid-template-columns',
+                        type: 'text',
+                        default: 'repeat(3, 1fr)',
+                        readonly: true
+                    },
+                    {
+                        name: 'grid-template-rows',
+                        type: 'text',
+                        default: 'repeat(2, 90px)',
+                        readonly: true
+                    }
+                ],
+                cssTarget: 'item'
+            }
+        };
+
+        // Item styles storage to remember overrides for selected item
+        let itemStylesStore = {};
+
+        // Initialize application
+        window.onload = function() {
+            loadPreset('grid-template');
+        };
+
+        // Switch main tab (Container vs Items)
+        function switchMainTab(tab) {
+            currentTab = tab;
+            const btnContainer = document.getElementById('tab-container');
+            const btnItems = document.getElementById('tab-items');
+            const navContainerGroup = document.getElementById('nav-container-group');
+            const navItemsGroup = document.getElementById('nav-items-group');
+
+            if (tab === 'container') {
+                btnContainer.className = "flex-1 py-2 px-3 text-sm font-semibold rounded-md transition-all text-cyan-400 bg-slate-800 shadow-sm flex items-center justify-center gap-2";
+                btnItems.className = "flex-1 py-2 px-3 text-sm font-medium text-slate-400 hover:text-slate-200 rounded-md transition-all flex items-center justify-center gap-2";
+                navContainerGroup.classList.remove('hidden');
+                navItemsGroup.classList.add('hidden');
+                loadPreset('grid-template');
+            } else {
+                btnItems.className = "flex-1 py-2 px-3 text-sm font-semibold rounded-md transition-all text-cyan-400 bg-slate-800 shadow-sm flex items-center justify-center gap-2";
+                btnContainer.className = "flex-1 py-2 px-3 text-sm font-medium text-slate-400 hover:text-slate-200 rounded-md transition-all flex items-center justify-center gap-2";
+                navItemsGroup.classList.remove('hidden');
+                navContainerGroup.classList.add('hidden');
+                loadPreset('grid-column-row');
+            }
+        }
+
+        // Load Preset preset definition into UI
+        function loadPreset(key) {
+            currentPresetKey = key;
+            const preset = presets[key];
+
+            // Highlight Active Sidebar Item
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-800', 'text-cyan-400', 'font-semibold');
+            });
+            event?.currentTarget?.classList.add('bg-slate-800', 'text-cyan-400', 'font-semibold');
+
+            // Header info
+            document.getElementById('current-badge').innerText = preset.category;
+            document.getElementById('current-title').innerHTML = `<code>${preset.title}</code>`;
+            document.getElementById('current-description').innerText = preset.description;
+
+            // Reset Item styles memory for clean preset switching
+            itemStylesStore = {};
+
+            // Show or hide item selector panel
+            const itemSelectorCard = document.getElementById('item-selector-card');
+            if (preset.itemFocus || preset.category === 'Grid Item') {
+                itemSelectorCard.classList.remove('hidden');
+                renderItemButtons(preset.itemsCount);
+            } else {
+                itemSelectorCard.classList.add('hidden');
+            }
+
+            // Build controls
+            currentConfig = {};
+            const controlsContainer = document.getElementById('controls-container');
+            controlsContainer.innerHTML = '';
+
+            preset.controls.forEach(ctrl => {
+                currentConfig[ctrl.name] = ctrl.default;
+
+                const ctrlGroup = document.createElement('div');
+                ctrlGroup.className = "space-y-1.5";
+
+                const label = document.createElement('label');
+                label.className = "block text-xs font-mono font-medium text-slate-300";
+                label.innerText = ctrl.name;
+                ctrlGroup.appendChild(label);
+
+                if (ctrl.type === 'select') {
+                    const select = document.createElement('select');
+                    select.className = "w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500 transition";
+                    select.onchange = (e) => updateConfigValue(ctrl.name, e.target.value);
+
+                    ctrl.options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.innerText = opt;
+                        if (opt === ctrl.default) option.selected = true;
+                        select.appendChild(option);
+                    });
+
+                    ctrlGroup.appendChild(select);
+                } else if (ctrl.type === 'text') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.readOnly = ctrl.readonly || false;
+                    input.value = ctrl.default;
+                    input.className = "w-full bg-slate-950/60 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-slate-400 cursor-not-allowed";
+                    ctrlGroup.appendChild(input);
+                }
+
+                controlsContainer.appendChild(ctrlGroup);
+            });
+
+            // Render Demo Grid
+            renderGridDemo();
+        }
+
+        // Render Item Buttons Selector
+        function renderItemButtons(count) {
+            const group = document.getElementById('item-buttons-group');
+            group.innerHTML = '';
+
+            for (let i = 1; i <= count; i++) {
+                const btn = document.createElement('button');
+                btn.className = `py-1.5 px-2 rounded-lg text-xs font-mono transition ${i === activeItemIndex ? 'bg-amber-500 text-slate-950 font-bold shadow' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`;
+                btn.innerText = `#${i}`;
+                btn.onclick = () => selectActiveItem(i);
+                group.appendChild(btn);
+            }
+        }
+
+        function selectActiveItem(index) {
+            activeItemIndex = index;
+            const preset = presets[currentPresetKey];
+            if (preset.itemFocus || preset.category === 'Grid Item') {
+                renderItemButtons(preset.itemsCount);
+            }
+            renderGridDemo();
+        }
+
+        // Update value from user interaction
+        function updateConfigValue(key, val) {
+            currentConfig[key] = val;
+            const preset = presets[currentPresetKey];
+
+            if (preset.cssTarget === 'item') {
+                if (!itemStylesStore[activeItemIndex]) {
+                    itemStylesStore[activeItemIndex] = {};
+                }
+                itemStylesStore[activeItemIndex][key] = val;
+            }
+
+            renderGridDemo();
+        }
+
+        // Main Renderer for Grid Canvas & Items
+        function renderGridDemo() {
+            const preset = presets[currentPresetKey];
+            const gridDemo = document.getElementById('grid-demo');
+            
+            // Clear styles & inner HTML
+            gridDemo.style = '';
+            gridDemo.innerHTML = '';
+
+            // Grid default base inline styles
+            gridDemo.style.display = currentConfig['display'] || 'grid';
+            
+            // Apply all container CSS from config
+            Object.keys(currentConfig).forEach(prop => {
+                if (preset.cssTarget === 'container' || prop.startsWith('grid-template') || prop.startsWith('gap')) {
+                    gridDemo.style[prop] = currentConfig[prop];
+                }
+            });
+
+            // Handle Area layout preset explicitly
+            const isAreas = preset.useAreasLayout;
+            const areaNames = ['header', 'sidebar', 'main', 'footer'];
+
+            const count = preset.itemsCount || 6;
+
+            for (let i = 1; i <= count; i++) {
+                const item = document.createElement('div');
+                const isSelected = (i === activeItemIndex) && (preset.cssTarget === 'item' || preset.itemFocus);
+
+                item.className = `demo-box rounded-lg p-3 flex flex-col justify-center items-center text-center font-mono text-xs font-semibold cursor-pointer select-none relative transition-all ${
+                    isSelected 
+                    ? 'bg-amber-500/90 text-slate-950 border-2 border-amber-300 shadow-xl z-10 scale-[1.01]' 
+                    : 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/40 hover:border-indigo-400 hover:bg-indigo-600/40'
+                }`;
+
+                item.onclick = () => selectActiveItem(i);
+
+                // If grid areas layout demo
+                if (isAreas && areaNames[i - 1]) {
+                    item.style.gridArea = areaNames[i - 1];
+                    item.innerHTML = `
+                        <span class="text-xs opacity-75 uppercase tracking-wider font-sans">Área</span>
+                        <span class="text-sm font-bold text-cyan-300 font-mono">${areaNames[i - 1]}</span>
+                    `;
+                } else {
+                    item.innerHTML = `<span>Ítem #${i}</span>`;
+                }
+
+                // Apply individual item style if targeted
+                if (preset.cssTarget === 'item' && i === activeItemIndex) {
+                    Object.keys(currentConfig).forEach(prop => {
+                        if (!prop.startsWith('grid-template')) {
+                            item.style[prop] = currentConfig[prop];
+                        }
+                    });
+                }
+
+                // Apply any remembered item styles
+                if (itemStylesStore[i]) {
+                    Object.keys(itemStylesStore[i]).forEach(p => {
+                        item.style[p] = itemStylesStore[i][p];
+                    });
+                }
+
+                gridDemo.appendChild(item);
+            }
+
+            // Update CSS code snippet UI
+            updateCSSCodeDisplay();
+        }
+
+        // Generate dynamic formatted CSS snippet
+        function updateCSSCodeDisplay() {
+            const preset = presets[currentPresetKey];
+            const codeDisplay = document.getElementById('css-code-display');
+            let code = '';
+
+            if (preset.cssTarget === 'container') {
+                code += `.container {\n  display: ${currentConfig['display'] || 'grid'};\n`;
+                Object.keys(currentConfig).forEach(prop => {
+                    if (prop !== 'display') {
+                        // format grid-template-areas lines cleanly
+                        if (prop === 'grid-template-areas') {
+                            const formatted = currentConfig[prop].split('\n').map(l => `    ${l}`).join('\n');
+                            code += `  grid-template-areas:\n${formatted};\n`;
+                        } else {
+                            code += `  ${prop}: ${currentConfig[prop]};\n`;
+                        }
+                    }
+                });
+                code += `}`;
+            } else {
+                code += `/* Grid Contenedor */\n.container {\n  display: grid;\n  grid-template-columns: ${currentConfig['grid-template-columns'] || 'repeat(3, 1fr)'};\n}\n\n`;
+                code += `/* Ítem Seleccionado (#${activeItemIndex}) */\n.item-${activeItemIndex} {\n`;
+                Object.keys(currentConfig).forEach(prop => {
+                    if (!prop.startsWith('grid-template')) {
+                        code += `  ${prop}: ${currentConfig[prop]};\n`;
+                    }
+                });
+                code += `}`;
+            }
+
+            codeDisplay.innerText = code;
+        }
+
+        // Toggle Grid visual lines overlay
+        function toggleGridLines() {
+            const demo = document.getElementById('grid-demo');
+            showLines = document.getElementById('toggle-lines').checked;
+            if (showLines) {
+                demo.classList.add('show-grid-lines');
+            } else {
+                demo.classList.remove('show-grid-lines');
+            }
+        }
+
+        // Reset current preset values
+        function resetCurrentPreset() {
+            loadPreset(currentPresetKey);
+        }
+
+        // Copy CSS Code Helper
+        function copyCSSCode() {
+            const code = document.getElementById('css-code-display').innerText;
+            
+            // Execute copy
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // Show Toast Notification
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y--150', 'opacity-0');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

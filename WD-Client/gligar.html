@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gligar</title>
+
+    <body>
+        <button>Tyranitar</button>
+    </body>
+</head>
+<body>
+    
+
+    <script>
+        let params = new URLSearchParams(window.location.search)
+
+        let URL = "https://pokeapi.co/api/v2/pokemon/" + params.get("p")
+
+
+        function mostrarPokemon(x) {
+
+        fetch(URL).then( (respuesta) => {
+            respuesta.json().then( (responseBody) => {
+                console.log(responseBody)
+
+                document.body.appendChild(document.createElement("p"))
+                document.querySelector("p").innerHTML +=
+                    "<li>" + responseBody.name + "</li>"
+                let imagen = document.createElement("img")
+                imagen.src = responseBody.sprites.front_default;
+                document.body.appendChild(imagen) 
+
+            })
+        }) 
+
+        }
+
+        fetch(URL).then( (respuesta) => {
+            respuesta.json().then( (responseBody) => {
+                console.log(responseBody)
+
+                document.body.appendChild(document.createElement("p"))
+                document.querySelector("p").innerHTML +=
+                    "<li>" + responseBody.name + "</li>"
+                let imagen = document.createElement("img")
+                imagen.src = responseBody.sprites.front_default;
+                document.body.appendChild(imagen) 
+
+            })
+        }) 
+
+        let botonTyranitar = document.querySelector("button");
+        botonTyranitar.addEventListener("click", () => {
+
+            fetch("https://pokeapi.co/api/v2/pokemon/tyranitar")
+        })
+
+    </script>
+</body>
+</html> 
