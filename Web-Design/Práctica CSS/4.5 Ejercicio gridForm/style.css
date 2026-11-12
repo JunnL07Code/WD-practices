@@ -1,0 +1,189 @@
+/*BASIC RESET*/
+
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+
+/*STYLING*/
+
+header, footer {
+    background-color: black;
+    color: white;
+    font-family: Ubuntu-Bold, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+header {
+    padding: 15px 90px 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position:sticky
+}
+
+#header-buttons {
+    display: flex;
+    flex-flow: row;
+    gap: 60px;
+}
+
+#header-buttons nav {
+    display: flex;
+    gap: 40px;
+}
+
+#header-icons{
+    display: flex;
+    gap: 20px;
+}
+
+#header-nav a{
+    color: white;
+    text-decoration: none;
+}
+
+#header-nav a:hover{
+    color: orange;
+}
+
+
+
+
+#title {
+    margin: 100px 0;
+    text-align: center;
+    font-size: 80px;
+    font-family: Montserrat-Bold;
+}
+
+#text {
+    font-family: CrimsonText;
+    color: grey;
+    font-size: 25px;
+    padding: 0 100px;
+    word-break: break-all;
+}
+
+#form-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 100px
+
+}
+
+#picture-container {
+    height: 400px;
+    width: 400px;
+}
+
+#picture-container img {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+}
+
+#form {
+    width: 50%;
+    font-size: 25px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+label {
+    width: 150px;
+}
+
+
+#form input[type=text] {
+    font-size: 25px;
+    height: 25px;
+    width: 80%;
+    align-self: flex-end;
+}
+
+#form input[name=fmensaje] {
+    height: 200px;
+}
+
+
+#form button[type=submit] {
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+
+}
+
+
+footer {
+    padding: 50px 90PX 25px;
+}
+
+#footer-upper-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+#footer-nav {
+    display: flex;
+    gap: 75px;
+}
+
+#footer-nav ul{
+    list-style-type: none;
+}
+
+#footer-nav a{
+    color: white;
+    text-decoration: none;
+}
+
+#footer-nav a:hover{
+    color: orange
+}
+
+#footer-down-section {
+    padding: 100px 0 0;
+    font-family: CrimsonText;
+    font-size: 20px;
+    font-weight: 100;
+    text-align: center;
+}
+
+#socials-buttons a{
+    color: white;
+}
+
+#socials-buttons a:hover{
+    color: orange;
+}
+
+
+
+
+/*FONT IMPORTS*/
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url(fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: Ubuntu-Bold, sans-serif;
+    src: url(fonts/Ubuntu-Bold.ttf);
+}
+
+@font-face {
+    font-family: CrimsonText;
+    src: url(fonts/CrimsonText-Regular.ttf);
+}
