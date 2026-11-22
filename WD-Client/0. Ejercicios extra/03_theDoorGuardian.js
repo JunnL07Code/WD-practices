@@ -25,7 +25,7 @@ if (accessLevel >= 5 || (accessLevel >= 3 && hasMagicKey)) {
 
 }
 
-accesValidation(userName, accessLevel, hasMagicKey);
+accesValidation(userName, accessLevel, hasMagicKey); // lo correcto es hacerlo con console.log(accessValidation y tal), ya que si no, el resultado del return no va a ningún lado
 accesValidation(userName, 2, hasMagicKey);
 accesValidation(userName, 5, !hasMagicKey);
 accesValidation(userName, accessLevel, !hasMagicKey);
