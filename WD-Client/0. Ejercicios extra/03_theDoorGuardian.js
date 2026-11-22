@@ -10,3 +10,23 @@
 // El programa debe mostrar "Acceso concedido" o "Acceso denegado" según corresponda.
 
 // Después, prueba estos casos: nivel 2 con llave, nivel 5 sin llave y nivel 3 sin llave. Comprueba que el resultado sea correcto en todos ellos.
+
+let userName = "Artificiero";
+let accessLevel = 3;
+let hasMagicKey = true;
+
+function accesValidation(userName, accessLevel, hasMagicKey) {
+
+if (accessLevel >= 5 || (accessLevel >= 3 && hasMagicKey)) {
+    return "Acceso concedido.";
+} else {
+    return "Acceso denegado.";
+}
+
+}
+
+accesValidation(userName, accessLevel, hasMagicKey);
+accesValidation(userName, 2, hasMagicKey);
+accesValidation(userName, 5, !hasMagicKey);
+accesValidation(userName, accessLevel, !hasMagicKey);
+
