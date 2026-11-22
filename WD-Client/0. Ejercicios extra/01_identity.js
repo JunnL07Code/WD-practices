@@ -15,3 +15,15 @@
 // - Genera las líneas del informe a partir de las variables, sin escribir los valores directamente en cada mensaje.
 // - No necesitas HTML ni crear una página web.
 
+let serverName = "Merlinus Mk2";
+let serverAge = 42;
+let serverStatus = "Iniciando";
+
+serverStatus = "Operativo";
+
+console.log(
+    "=== INFORME DEL SERVIDOR ===\r" + // es mejor usar \n, no \r
+    "Nombre: " + serverName + "\r"+
+    "Edad: " + serverAge + "\r" +
+    "Estado: " +serverStatus 
+);
