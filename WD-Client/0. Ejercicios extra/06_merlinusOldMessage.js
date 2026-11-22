@@ -17,3 +17,16 @@
 // - Incluye las comillas de "Advertencia:" en la salida.
 // - Utiliza secuencias de escape cuando sean necesarias.
 // - No utilices todavía métodos avanzados de cadenas que no hayas estudiado.
+
+const sender = "Merlinus";
+const recipient = "Merlinus Mk2";
+const message = "Don't trust the first diagnosis...";
+
+console.log(
+    "From: " + sender +
+    "\nTo: " + recipient +
+
+    '\n\n"Warning:"\n' +
+    message +
+    "\n-- Message ended --"
+);
